@@ -101,7 +101,6 @@ def handle_login():
     else:
         return jsonify({'error': 'User not found.'}), 404
 
-# Route to handle creating a new assistant
 @app.route('/create_assistant', methods=['POST'])
 def handle_create_assistant():
     user_id = session.get('user_id')  # Retrieve user ID from session
@@ -112,8 +111,8 @@ def handle_create_assistant():
     description = request.form.get('description')
     instructions = request.form.get('instructions')
 
-    if not (name and description):
-        return jsonify({'error': 'Name and description are required fields.'}), 400
+    if not name:
+        return jsonify({'error': 'Name is a required field.'}), 400
 
     try:
         # Create the assistant
