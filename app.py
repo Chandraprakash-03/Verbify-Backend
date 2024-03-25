@@ -141,6 +141,7 @@ def handle_create_assistant():
     except Exception as e:
         print("Error creating assistant:", e)
         return jsonify({'error': 'Failed to create assistant.'}), 500
+        
 
 # Route to retrieve the list of assistants for a user
 @app.route('/assistants', methods=['GET'])
