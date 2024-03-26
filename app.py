@@ -84,22 +84,29 @@ def handle_signup():
 def handle_login():
     email = request.form.get('email')
     password = request.form.get('password')
+    print(f"Received email: {email}, password: {password}")  # Log the received data
 
-    # Retrieve user data by email
-    user_data = get_user_by_email(email)
-    if user_data:
-        if user_data.get('password') == password:
-            # Login successful, set user ID in session
-            user_id = user_data.get('id')
-            if user_id:
-                session['user_id'] = user_id
-                return jsonify({'message': 'Login successful.', 'user_id': user_id}), 200
+    try:
+        # Retrieve user data by email
+        user_data = get_user_by_email(email)
+        print(f"Retrieved user data: {user_data}")  # Log the retrieved user data
+
+        if user_data:
+            if user_data.get('password') == password:
+                # Login successful, set user ID in session
+                user_id = user_data.get('id')
+                if user_id:
+                    session['user_id'] = user_id
+                    return jsonify({'message': 'Login successful.', 'user_id': user_id}), 200
+                else:
+                    return jsonify({'error': 'User ID not found in user data.'}), 500
             else:
-                return jsonify({'error': 'User ID not found in user data.'}), 500
+                return jsonify({'error': 'Invalid email or password.'}), 401
         else:
-            return jsonify({'error': 'Invalid email or password.'}), 401
-    else:
-        return jsonify({'error': 'User not found.'}), 404
+            return jsonify({'error': 'User not found.'}), 404
+    except Exception as e:
+        print(f"Error logging in user: {e}")
+        return jsonify({'error': 'An error occurred while processing the login request.'}), 500
 
 @app.route('/check_session', methods=['GET'])
 def check_session():
