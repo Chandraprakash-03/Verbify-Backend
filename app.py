@@ -132,12 +132,12 @@ def handle_create_assistant():
     if not user_id:
         return jsonify({'error': 'User not logged in.'}), 401
 
-    name = request.form.get('name')
-    description = request.form.get('description')
-    instructions = request.form.get('instructions')
+    name = request.json.get('name')
+    description = request.json.get('description')
+    instructions = request.json.get('instructions')
 
-    if not name:
-        return jsonify({'error': 'Name is a required field.'}), 400
+    if not (name and description):
+        return jsonify({'error': 'Name and description are required fields.'}), 400
 
     try:
         # Create the assistant
