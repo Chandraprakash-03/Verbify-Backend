@@ -37,7 +37,11 @@ def save_user_data(name, email, password):
 # Function to load assistants from Firebase Realtime Database under user's directory
 def load_assistants(user_id):
     user_assistants_ref = user_ref.child(user_id).child('assistants')
-    return user_assistants_ref.get() or {}
+    assistants = user_assistants_ref.get()
+    if assistants:
+        return assistants
+    else:
+        return {}
 
 # Function to retrieve user data from Firebase Realtime Database by email
 def get_user_by_email(email):
