@@ -128,7 +128,7 @@ def check_session():
 
 @app.route('/create_assistant', methods=['POST'])
 def handle_create_assistant():
-    user_id = session.get('user_id')  # Retrieve user ID from session
+    user_id = request.json.get('session_id')
     if not user_id:
         return jsonify({'error': 'User not logged in.'}), 401
 
