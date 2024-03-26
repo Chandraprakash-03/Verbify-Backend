@@ -103,7 +103,7 @@ def handle_login():
                 if user_id:
                     session['user_id'] = user_id
                     session['username'] = username
-                    print(f"Set session['user_id'] to {user_id}")  # Log the session ID
+                    print(f"Set session['user_id'] to {user_id} and session['username'] to {username}")  # Log the session ID
                     # session_id = session['id']
                     # print(f"Session ID: {session_id}")  # Log the session ID
                     return jsonify({'message': 'Login successful.', 'user_id': user_id}), 200
