@@ -136,6 +136,10 @@ def handle_create_assistant():
     description = request.json.get('description')
     instructions = request.json.get('instructions')
 
+    print('Name:', name)
+    print('Description:', description)
+    print('Instructions:', instructions)
+
     if not (name and description):
         return jsonify({'error': 'Name and description are required fields.'}), 400
 
