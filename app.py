@@ -93,13 +93,23 @@ def handle_login():
             user_id = user_data.get('id')
             if user_id:
                 session['user_id'] = user_id
-                return jsonify({'message': 'Login successful.', 'user_id': user_id}), 200
+                response = jsonify({'message': 'Login successful.', 'user_id': user_id})
+                response.set_cookie('session_id', session.sid, samesite='Strict')  # Set the session cookie
+                return response, 200
             else:
                 return jsonify({'error': 'User ID not found in user data.'}), 500
         else:
             return jsonify({'error': 'Invalid email or password.'}), 401
     else:
         return jsonify({'error': 'User not found.'}), 404
+
+@app.route('/check_session', methods=['GET'])
+def check_session():
+    user_id = session.get('user_id')
+    if user_id:
+        return jsonify({'is_logged_in': True, 'user_id': user_id}), 200
+    else:
+        return jsonify({'is_logged_in': False}), 401
 
 @app.route('/create_assistant', methods=['POST'])
 def handle_create_assistant():
