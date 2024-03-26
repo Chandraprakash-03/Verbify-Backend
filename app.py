@@ -169,13 +169,17 @@ def get_user_assistants():
     if not user_id:
         return jsonify({'error': 'User not logged in.'}), 401
 
-    # Load assistants from Firebase Realtime Database for the current user
-    assistants = load_assistants(user_id)
+    try:
+        # Load assistants from Firebase Realtime Database for the current user
+        assistants = load_assistants(user_id)
 
-    # Convert the assistants dictionary to a list for serialization
-    assistants_list = [{'assistant_id': key, **value} for key, value in assistants.items()]
+        # Convert the assistants dictionary to a list for serialization
+        assistants_list = [{'assistant_id': key, **value} for key, value in assistants.items()]
 
-    return jsonify(assistants_list), 200
+        return jsonify(assistants_list), 200
+    except Exception as e:
+        print(f"Error retrieving assistants: {e}")
+        return jsonify({'error': 'An error occurred while retrieving assistants.'}), 500
 
 # Function to retrieve assistant ID based on user ID
 def get_assistant_id(user_id):
