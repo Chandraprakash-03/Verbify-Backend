@@ -162,10 +162,11 @@ def handle_create_assistant():
         return jsonify({'error': 'Failed to create assistant.'}), 500
         
 
-@app.route('/assistants', methods=['GET', 'POST'])
+@app.route('/assistants', methods=['POST'])
 def get_user_assistants():
     # Check if user is logged in
-    user_id = request.form.get('session_id')
+    user_id = request.json.get('session_id')
+    print('Received session ID:', user_id) # Add this line
     if not user_id:
         return jsonify({'error': 'User not logged in.'}), 401
 
