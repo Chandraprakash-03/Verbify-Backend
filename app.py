@@ -95,15 +95,13 @@ def handle_login():
         user_data = get_user_by_email(email)
         print(f"Retrieved user data: {user_data}")  # Log the retrieved user data
 
-   
         if user_data:
             if user_data.get('password') == password:
                 # Login successful, set user ID in session
                 user_id = user_data.get('id')
                 if user_id:
                     session['user_id'] = user_id
-                    session_id = session.sid
-                    print(f"Set session['user_id'] to {user_id}")  # Add this line
+                    print(f"Set session['user_id'] to {user_id}")  # Log the set user_id
                     return jsonify({'message': 'Login successful.', 'user_id': user_id}), 200
                 else:
                     return jsonify({'error': 'User ID not found in user data.'}), 500
@@ -114,6 +112,7 @@ def handle_login():
     except Exception as e:
         print(f"Error logging in user: {e}")
         return jsonify({'error': 'An error occurred while processing the login request.'}), 500
+
 
 @app.route('/check_session', methods=['GET'])
 def check_session():
