@@ -158,22 +158,20 @@ def handle_create_assistant():
         return jsonify({'error': 'Failed to create assistant.'}), 500
         
 
-# Route to retrieve the list of assistants for a user
-@app.route('/assistants', methods=['GET'])
+@app.route('/assistants', methods=['GET', 'POST'])
 def get_user_assistants():
     # Check if user is logged in
-    if 'user_id' not in session:
-        return jsonify({'error': 'User not logged in.'}), 401
-    
-    user_id = session.get('user_id')  # Use .get() method to handle None gracefully
-    
+    user_id = request.form.get('session_id')
     if not user_id:
-        return jsonify({'error': 'User ID not found.'}), 404
-    
+        return jsonify({'error': 'User not logged in.'}), 401
+
     # Load assistants from Firebase Realtime Database for the current user
     assistants = load_assistants(user_id)
-    
-    return jsonify(assistants), 200
+
+    # Convert the assistants dictionary to a list for serialization
+    assistants_list = [{'assistant_id': key, **value} for key, value in assistants.items()]
+
+    return jsonify(assistants_list), 200
 
 # Function to retrieve assistant ID based on user ID
 def get_assistant_id(user_id):
