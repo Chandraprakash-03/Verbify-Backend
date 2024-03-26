@@ -99,6 +99,7 @@ def handle_login():
             if user_data.get('password') == password:
                 # Login successful, set user ID in session
                 user_id = user_data.get('id')
+                username = user_data.get('name')
                 if user_id:
                     session['user_id'] = user_id
                     session['username'] = user_data['name']
