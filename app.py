@@ -95,12 +95,14 @@ def handle_login():
         user_data = get_user_by_email(email)
         print(f"Retrieved user data: {user_data}")  # Log the retrieved user data
 
+   
         if user_data:
             if user_data.get('password') == password:
                 # Login successful, set user ID in session
                 user_id = user_data.get('id')
                 if user_id:
                     session['user_id'] = user_id
+                    print(f"Set session['user_id'] to {user_id}")  # Add this line
                     return jsonify({'message': 'Login successful.', 'user_id': user_id}), 200
                 else:
                     return jsonify({'error': 'User ID not found in user data.'}), 500
