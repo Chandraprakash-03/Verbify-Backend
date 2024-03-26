@@ -102,7 +102,7 @@ def handle_login():
                 username = user_data.get('name')
                 if user_id:
                     session['user_id'] = user_id
-                    session['username'] = user_data['name']
+                    session['username'] = username
                     print(f"Set session['user_id'] to {user_id}")  # Log the session ID
                     # session_id = session['id']
                     # print(f"Session ID: {session_id}")  # Log the session ID
