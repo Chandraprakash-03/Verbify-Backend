@@ -101,7 +101,9 @@ def handle_login():
                 user_id = user_data.get('id')
                 if user_id:
                     session['user_id'] = user_id
-                    print(f"Set session['user_id'] to {user_id}")  # Log the set user_id
+                    print(f"Set session['user_id'] to {user_id}")  # Log the session ID
+                    session_id = session.sid
+                    print(f"Session ID: {session_id}")  # Log the session ID
                     return jsonify({'message': 'Login successful.', 'user_id': user_id}), 200
                 else:
                     return jsonify({'error': 'User ID not found in user data.'}), 500
