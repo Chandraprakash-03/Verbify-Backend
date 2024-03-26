@@ -276,7 +276,7 @@ def retrieve_assistant_response(thread_id):
     # Route to log user activity
 @app.route('/log_activity', methods=['POST'])
 def log_activity():
-    user_id = session.get('user_id')  # Retrieve user ID from session
+    user_id =  request.headers.get('session_id')   # Retrieve user ID from session
     if not user_id:
         return jsonify({'message': "User not logged in."}), 401
 
