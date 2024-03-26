@@ -201,7 +201,7 @@ def get_assistant_id(user_id):
 @app.route('/send_message', methods=['POST'])
 def send_message():
     global thread_id
-    user_id = session.get('user_id') 
+    user_id = session.get('session_id') 
     print(f"{user_id}")# Retrieve user ID from session
     if not user_id:
         return jsonify({'message': "User not logged in."}), 401
