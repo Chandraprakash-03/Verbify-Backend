@@ -207,6 +207,7 @@ def get_assistant_id(user_id):
 def send_message():
     global thread_id
     user_id = request.headers.get('session_id') 
+    assistant_id = request.body.get('assistant_id')
     print(f"{user_id}")# Retrieve user ID from session
     if not user_id:
         return jsonify({'message': "User not logged in."}), 401
@@ -217,7 +218,7 @@ def send_message():
     if not message:
         return jsonify({'message': "Please provide a valid message."}), 400
 
-    assistant_id = get_assistant_id(user_id)
+    # assistant_id = get_assistant_id(user_id)
     if assistant_id is None:
         return jsonify({'message': "Assistant ID not found for the user."}), 404
 
