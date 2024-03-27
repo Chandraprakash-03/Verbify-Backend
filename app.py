@@ -140,14 +140,14 @@ def handle_create_assistant():
     print('Description:', description)
     print('Instructions:', instructions)
 
-    if not (name and description):
-        return jsonify({'error': 'Name and description are required fields.'}), 400
+    if not (name and instructions):
+        return jsonify({'error': 'Name and instructions are required fields.'}), 400
 
     try:
         # Create the assistant
         assistant = client.beta.assistants.create(
             name=name,
-            description=description,
+            # description=description,
             instructions=instructions,
             tools=[{"type": "code_interpreter"}],
             model="gpt-3.5-turbo",
@@ -162,6 +162,7 @@ def handle_create_assistant():
             'assistant_id': assistant_id,
             'name': name,
             'description': description,
+            'instructions': instructions,
             'created_at': created_at
         }
         assistants_ref.push(assistant_data)
