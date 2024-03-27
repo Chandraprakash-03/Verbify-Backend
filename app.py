@@ -208,6 +208,7 @@ def send_message():
     global thread_id
     user_id = request.headers.get('session_id') 
     assistant_id = request.json.get('assistant_id')
+    print(f"{assistant_id}")
     print(f"{user_id}")# Retrieve user ID from session
     if not user_id:
         return jsonify({'message': "User not logged in."}), 401
