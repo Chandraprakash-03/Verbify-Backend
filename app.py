@@ -16,7 +16,7 @@ app.secret_key = '19092003'  # Set a secret key for session management
 # Initialize Firebase Admin SDK
 cred = credentials.Certificate("serviceAccountKey.json")  # Update with your service account key
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://verbify-86ea6-default-rtdb.firebaseio.com/'  # Update with your database URL
+    'databaseURL': 'https://employee-d413f-default-rtdb.firebaseio.com/'  # Update with your database URL
 })
 user_ref = db.reference('/Users')  # Reference to the directory where user information is stored
 
@@ -140,14 +140,14 @@ def handle_create_assistant():
     print('Description:', description)
     print('Instructions:', instructions)
 
-    if not (name and instructions):
-        return jsonify({'error': 'Name and instructions are required fields.'}), 400
+    if not (name and description):
+        return jsonify({'error': 'Name and description are required fields.'}), 400
 
     try:
         # Create the assistant
         assistant = client.beta.assistants.create(
             name=name,
-            # description=description,
+            description=description,
             instructions=instructions,
             tools=[{"type": "code_interpreter"}],
             model="gpt-3.5-turbo",
@@ -162,7 +162,6 @@ def handle_create_assistant():
             'assistant_id': assistant_id,
             'name': name,
             'description': description,
-            'instructions': instructions,
             'created_at': created_at
         }
         assistants_ref.push(assistant_data)
@@ -207,8 +206,6 @@ def get_assistant_id(user_id):
 def send_message():
     global thread_id
     user_id = request.headers.get('session_id') 
-    # assistant_id = request.json.get('assistant_id')
-    # print(f"{assistant_id}")
     print(f"{user_id}")# Retrieve user ID from session
     if not user_id:
         return jsonify({'message': "User not logged in."}), 401
