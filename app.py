@@ -81,7 +81,7 @@ def handle_signup():
         return jsonify({'message': 'Signup successful.', 'user_id': new_user_id}), 200
     except Exception as e:
         print("Error signing up user:", e)
-        app.logger.error()
+        app.logger.error(f"Error signing up user: {e}")
         return jsonify({'error': 'An error occurred while processing the signup request.'}), 500
 
 
