@@ -16,7 +16,7 @@ app.secret_key = '19092003'  # Set a secret key for session management
 # Initialize Firebase Admin SDK
 cred = credentials.Certificate("serviceAccountKey.json")  # Update with your service account key
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://employee-d413f-default-rtdb.firebaseio.com/'  # Update with your database URL
+    'databaseURL': 'https://employee-d413f-default-rtdb.firebaseio.com'  # Update with your database URL
 })
 user_ref = db.reference('/Users')  # Reference to the directory where user information is stored
 
